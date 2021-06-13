@@ -1,3 +1,30 @@
+
+
+# city-explorer
+**Author**: Shatha Al-Smadi
+**Version**: 1.0.0
+## Overview
+this application is for finding the location on map, by entering the name of the city.
+## Getting Started
+just navigate to : https://city-explorer-shatha.netlify.app/
+and enter the name of the city.
+## Architecture
+this application was made with javascript using React, and bootstrap for styling, and axios for API getting command.
+## Change Log
+13-06-2021 6:00pm - Application now has a fully-functional form and map display.
+## Credit and Collaborations
+Humam Makhzoumi : https://github.com/Mkhzoumi
+
+
+
+
+
+
+
+
+
+<!--
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -67,4 +94,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
