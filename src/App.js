@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
+import Weather from './components/Weather';
 class App extends react.Component {
   constructor(props) {
     super(props);
@@ -14,7 +15,8 @@ class App extends react.Component {
       userInput: '',
       status: false,
       cityData: [],
-      show:false
+      show:false,
+      allWeatherData: [],
     }
   }
   change = (e) => {
@@ -28,14 +30,18 @@ class App extends react.Component {
     try {
       let userData = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.b6121b9228405978e393d4a1d5645e42&q=${this.state.userInput}&format=Json`);
       this.temp=this.state.userInput;
+      let weatherData= await axios.get('https://city-explorer-shatha.herokuapp.com/data');
       this.setState({
         cityData: userData.data,
-        status: true
+        status: true,
+        allWeatherData: weatherData.data.data
       });
+     
     } catch (error) {
       this.setState({
         show: true,
-        status:false
+        status:false,
+     
       })
     }   
   }
@@ -44,10 +50,12 @@ this.setState({
   show: false
 })
   }
+
+
   render() {
     return (
       <>
-      <div class='cont' style={{display: 'grid', 'grid-template-columns': '1fr 2fr','grid-gap': '10em',padding: '5%'}}>
+      <div class='cont' style={{display: 'grid', 'grid-template-columns': '1fr 2fr ','grid-gap': '10em',padding: '5%'}}>
         <div class='form'>
         <Form onSubmit={this.submit} style={{border:'1px solid', padding:'1em'}}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -68,6 +76,7 @@ this.setState({
                   <th>City Name</th>
                   <th>Latitude</th>
                   <th>Longtitude</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -75,10 +84,22 @@ this.setState({
                   <td>{this.temp}</td>
                   <td>{this.state.cityData[0].lat}</td>
                   <td>{this.state.cityData[0].lon}</td>
+               
                 </tr>
               </tbody>
             </Table>
             <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.b6121b9228405978e393d4a1d5645e42&center=${this.state.cityData[0].lat},${this.state.cityData[0].lon}&zoom=1-18`} roundedCircle fluid  style={{'margin-left':'10%'}}/>
+            
+            { 
+             
+                <Weather
+                  allWeatherData={this.state.allWeatherData}
+                  
+                />
+              }
+
+
+            
           </div>
           }
 </div>
