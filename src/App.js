@@ -8,6 +8,8 @@ import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
 import Weather from './components/Weather';
+import Movie from './components/Movie';
+
 class App extends react.Component {
   constructor(props) {
     super(props);
@@ -19,18 +21,26 @@ class App extends react.Component {
       weatherData: [],
       lat: '',
       lon: '',
-      weatherStatus: false
+      weatherStatus: false,
+      movieInfo:[],
+      movieStatus: false,
+     
+      
     }
   }
   change = (e) => {
     this.setState({
-      userInput: e.target.value
+      userInput: e.target.value,
+      
     })
   }
   submit = async (e) => {
     e.preventDefault();
     this.temp = '';
+ 
     try {
+     
+    
       let userData = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.b6121b9228405978e393d4a1d5645e42&q=${this.state.userInput}&format=json`);
       this.temp = this.state.userInput;
       this.setState({
@@ -40,11 +50,20 @@ class App extends react.Component {
         lon: userData.data[0].lon
       });
       let weatherData = await axios.get(`https://city-explorer-shatha.herokuapp.com/data?lon=${this.state.lon}&lat=${this.state.lat}`);
+      let movieInfo =await axios.get(`https://city-explorer-shatha.herokuapp.com/movies?query=${this.state.userInput}`);
       this.setState({
         weatherData: weatherData.data,
-        weatherStatus: true
+        weatherStatus: true,
+        movieInfo:movieInfo.data,
+        movieStatus: true ,
+     
       });
       console.log(userData.data[0].lon);
+
+     
+ 
+      
+      
     } catch (error) {
       this.setState({
         show: true,
@@ -96,7 +115,12 @@ class App extends react.Component {
                     weatherData={this.state.weatherData}
                   />
                 }
-                <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.b6121b9228405978e393d4a1d5645e42&center=${this.state.cityData[0].lat},${this.state.cityData[0].lon}&zoom=1-18`} roundedCircle fluid style={{ 'margin-left': '10%' }} />
+                {this.state.movieStatus &&
+                  <Movie
+                  movies={this.state.movieInfo}
+                  />
+                }
+                <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.b6121b9228405978e393d4a1d5645e42&center=${this.state.cityData[0].lat},${this.state.cityData[0].lon}&zoom=1-18`} roundedCircle style={{ 'margin-top': '5%' }} />
               </div>
             }
           </div>
